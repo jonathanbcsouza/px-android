@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.transition.Visibility;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,8 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -170,11 +173,14 @@ public class GuessingCardActivity extends MercadoPagoBaseActivity implements Gue
     private LinearLayout mCardIdentificationInput;
     private LinearLayout mCardSecurityCodeInput;
     private FrameLayout mErrorContainer;
+    private FrameLayout mRedErrorContainer;
     private MPTextView mErrorTextView;
     private String mErrorState;
     private TextView mNextButtonText;
     private TextView mBackButtonText;
     private TextView mBackInactiveButtonText;
+    private Animation mErrorContainerUpAnimation;
+    private Animation mErrorContainerDownAnimation;
 
     //Input Controls
     private String mCurrentEditingEditText;
@@ -569,9 +575,13 @@ public class GuessingCardActivity extends MercadoPagoBaseActivity implements Gue
         mCardIdentificationInput = (LinearLayout) findViewById(R.id.mpsdkCardIdentificationInput);
         mCardSecurityCodeInput = (LinearLayout) findViewById(R.id.mpsdkCardSecurityCodeContainer);
         mErrorContainer = (FrameLayout) findViewById(R.id.mpsdkErrorContainer);
+        mRedErrorContainer = (FrameLayout) findViewById(R.id.mpsdkRedErrorContainer);
         mErrorTextView = (MPTextView) findViewById(R.id.mpsdkErrorTextView);
         mScrollView = (ScrollView) findViewById(R.id.mpsdkScrollViewContainer);
         mDiscountFrameLayout = (FrameLayout) findViewById(R.id.mpsdkDiscount);
+        mErrorContainerUpAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.mpsdk_slide_bottom_up);
+        mErrorContainerDownAnimation = AnimationUtils.loadAnimation(mActivity, R.anim.mpsdk_slide_bottom_down);
+
         mInputContainer.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
@@ -759,7 +769,8 @@ public class GuessingCardActivity extends MercadoPagoBaseActivity implements Gue
                         mPresenter.saveBin(bin);
                         if (paymentMethodList.size() == 0) {
                             setInputMaxLength(mCardNumberEditText, MercadoPagoUtil.BIN_LENGTH);
-                            setErrorView(getString(R.string.mpsdk_invalid_payment_method));
+                            //TODO agregar la row roja "no puedes pagar con esta tarjeta"
+                            setInvalidCardErrorView();
                         } else if (paymentMethodList.size() == 1) {
                             onPaymentMethodSet(paymentMethodList.get(0));
                         } else {
@@ -894,6 +905,19 @@ public class GuessingCardActivity extends MercadoPagoBaseActivity implements Gue
             public void onClick(View v) {
                 if (!mCurrentEditingEditText.equals(CARD_NUMBER_INPUT)) {
                     checkIsEmptyOrValid();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void setErrorContainerListener() {
+        mRedErrorContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<PaymentMethod> supportedPaymentMethods = mPresenter.getAllSupportedPaymentMethods();
+                if (supportedPaymentMethods != null && !supportedPaymentMethods.isEmpty()) {
+                    //TODO abrir pantalla
                 }
             }
         });
@@ -1345,12 +1369,23 @@ public class GuessingCardActivity extends MercadoPagoBaseActivity implements Gue
         setErrorState(ERROR_STATE);
     }
 
+    private void setInvalidCardErrorView() {
+        mRedErrorContainer.startAnimation(mErrorContainerUpAnimation);
+        mRedErrorContainer.setVisibility(View.VISIBLE);
+        setErrorState(ERROR_STATE);
+        setErrorCardNumber();
+    }
+
     @Override
     public void clearErrorView() {
         mButtonContainer.setVisibility(View.VISIBLE);
         mErrorContainer.setVisibility(View.GONE);
         mErrorTextView.setText("");
         setErrorState(NORMAL_STATE);
+        if (mRedErrorContainer.getVisibility() == View.VISIBLE) {
+            mRedErrorContainer.startAnimation(mErrorContainerDownAnimation);
+            mRedErrorContainer.setVisibility(View.GONE);
+        }
     }
 
     @Override

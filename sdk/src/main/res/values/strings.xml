@@ -55,6 +55,7 @@
     <string name="mpsdk_invalid_expiry_date">La fecha que ingresaste es inválida</string>
     <string name="mpsdk_invalid_identification_number">Ingresa todos los números</string>
     <string name="mpsdk_invalid_payment_method">No puedes pagar con este medio de pago</string>
+    <string name="mpsdk_invalid_card_payment_method">No puedes pagar con esta tarjeta</string>
     <string name="mpsdk_card_number_label">Número de tarjeta</string>
     <string name="mpsdk_card_expire_date_label">Fecha de expiración</string>
     <string name="mpsdk_cardholder_name">Nombre y apellido</string>
@@ -65,6 +66,7 @@
     <string name="mpsdk_continue_label">Continuar</string>
     <string name="mpsdk_payment_method">Medio de pago</string>
     <string name="mpsdk_issuer_label">Banco</string>
+    <string name="mpsdk_more_info">MÁS INFO</string>
 
     <string name="mpsdk_invalid_card_bin">El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta</string>
     <string name="mpsdk_invalid_card_luhn">El número de tarjeta que ingresaste es incorrecto</string>

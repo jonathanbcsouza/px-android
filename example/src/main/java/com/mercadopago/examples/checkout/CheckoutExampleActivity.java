@@ -18,6 +18,7 @@ import com.mercadopago.examples.utils.ColorPickerDialog;
 import com.mercadopago.examples.utils.ExamplesUtils;
 import com.mercadopago.exceptions.MercadoPagoError;
 import com.mercadopago.model.Payment;
+import com.mercadopago.model.PaymentData;
 import com.mercadopago.preferences.CheckoutPreference;
 import com.mercadopago.preferences.DecorationPreference;
 import com.mercadopago.util.JsonUtil;
@@ -68,11 +69,13 @@ public class CheckoutExampleActivity extends AppCompatActivity {
     }
 
     private void startMercadoPagoCheckout() {
+        mPublicKey = "TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee";
+        CheckoutPreference checkoutPreference = new CheckoutPreference("243962506-1c16a9a0-79b6-4a61-bcac-fe073b18565f");
+
         new MercadoPagoCheckout.Builder()
                 .setActivity(this)
                 .setPublicKey(mPublicKey)
-                .setCheckoutPreference(getCheckoutPreference())
-                .setDecorationPreference(getCurrentDecorationPreference())
+                .setCheckoutPreference(checkoutPreference)
                 .startForPayment();
     }
 
@@ -86,6 +89,8 @@ public class CheckoutExampleActivity extends AppCompatActivity {
         LayoutUtil.showRegularLayout(this);
 
         if (requestCode == MercadoPagoCheckout.CHECKOUT_REQUEST_CODE) {
+
+
             if (resultCode == MercadoPagoCheckout.PAYMENT_RESULT_CODE) {
                 Payment payment = JsonUtil.getInstance().fromJson(data.getStringExtra("payment"), Payment.class);
                 Toast.makeText(mActivity, "Pago con status: " + payment.getStatus(), Toast.LENGTH_SHORT).show();

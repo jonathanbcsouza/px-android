@@ -338,6 +338,13 @@ public class GuessingCardPresenter {
                 mPaymentPreference.getExcludedPaymentTypes());
     }
 
+    public List<PaymentMethod> getAllSupportedPaymentMethods() {
+        if (mPaymentMethodGuessingController != null) {
+            return mPaymentMethodGuessingController.getAllSupportedPaymentMethods();
+        }
+        return null;
+    }
+
     private void startGuessingForm() {
         initializeGuessingCardNumberController();
         mView.initializeTitle();
@@ -349,6 +356,7 @@ public class GuessingCardPresenter {
         mView.setIdentificationNumberListeners();
         mView.setNextButtonListeners();
         mView.setBackButtonListeners();
+        mView.setErrorContainerListener();
     }
 
     public String getPaymentTypeId() {

@@ -41,6 +41,8 @@ public interface GuessingCardActivityView {
 
     void setBackButtonListeners();
 
+    void setErrorContainerListener();
+
     void setIdentificationTypeListeners();
 
     void setIdentificationNumberListeners();
