@@ -67,6 +67,8 @@
     <string name="mpsdk_payment_method">Medio de pago</string>
     <string name="mpsdk_issuer_label">Banco</string>
     <string name="mpsdk_more_info">MÁS INFO</string>
+    <string name="mpsdk_try_other_card">Intentar con otra tarjeta</string>
+    <string name="mpsdk_you_can_finish_your_payment_with_cards">Pero no te preocupes, aún puedes terminar tu pago con:</string>
 
     <string name="mpsdk_invalid_card_bin">El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta</string>
     <string name="mpsdk_invalid_card_luhn">El número de tarjeta que ingresaste es incorrecto</string>
@@ -262,5 +264,6 @@
     <string translatable="false" name="mpsdk_error_message_detail_no_payer_cost_found">no payer costs found at InstallmentsActivity</string>
     <string translatable="false" name="mpsdk_error_message_detail_multiple_installments">multiple installments found for an issuer at InstallmentsActivity</string>
     <string translatable="false" name="mpsdk_error_message_detail_issuers">no issuers found at IssuersActivity</string>
+    <string translatable="false" name="mpsdk_error_message_detail_no_payment_method_list">no payment method list found at ReviewPaymentMethodsActivity</string>
 
 </resources>

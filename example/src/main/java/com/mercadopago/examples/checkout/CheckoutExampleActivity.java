@@ -70,7 +70,10 @@ public class CheckoutExampleActivity extends AppCompatActivity {
 
     private void startMercadoPagoCheckout() {
         mPublicKey = "TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee";
-        CheckoutPreference checkoutPreference = new CheckoutPreference("243962506-1c16a9a0-79b6-4a61-bcac-fe073b18565f");
+        //visa excluido
+//        CheckoutPreference checkoutPreference = new CheckoutPreference("243962506-1c16a9a0-79b6-4a61-bcac-fe073b18565f");
+        //visa y debit_card excluido
+        CheckoutPreference checkoutPreference = new CheckoutPreference("243962506-12be6b6e-c691-4b12-89f5-ec2abca06fbd");
 
         new MercadoPagoCheckout.Builder()
                 .setActivity(this)

@@ -1,5 +1,6 @@
 package com.mercadopago.controllers;
 
+import com.mercadopago.constants.PaymentTypes;
 import com.mercadopago.model.CardInformation;
 import com.mercadopago.model.PaymentMethod;
 import com.mercadopago.model.Setting;
@@ -33,7 +34,20 @@ public class PaymentMethodGuessingController {
     }
 
     public List<PaymentMethod> getAllSupportedPaymentMethods() {
-        return mAllPaymentMethods;
+        List<PaymentMethod> supportedPaymentMethods = new ArrayList<>();
+        for (PaymentMethod paymentMethod: mAllPaymentMethods) {
+            if (isCardPaymentType(paymentMethod)) {
+                supportedPaymentMethods.add(paymentMethod);
+            }
+        }
+        return supportedPaymentMethods;
+    }
+
+    private boolean isCardPaymentType(PaymentMethod paymentMethod) {
+        String paymentTypeId = paymentMethod.getPaymentTypeId();
+        return paymentTypeId.equals(PaymentTypes.CREDIT_CARD) ||
+                paymentTypeId.equals(PaymentTypes.DEBIT_CARD) ||
+                paymentTypeId.equals(PaymentTypes.PREPAID_CARD);
     }
 
     public List<PaymentMethod> guessPaymentMethodsByBin(String bin) {

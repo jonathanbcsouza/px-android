@@ -917,10 +917,19 @@ public class GuessingCardActivity extends MercadoPagoBaseActivity implements Gue
             public void onClick(View v) {
                 List<PaymentMethod> supportedPaymentMethods = mPresenter.getAllSupportedPaymentMethods();
                 if (supportedPaymentMethods != null && !supportedPaymentMethods.isEmpty()) {
-                    //TODO abrir pantalla
+                    startReviewPaymentMethodsActivity(supportedPaymentMethods);
                 }
             }
         });
+    }
+
+    private void startReviewPaymentMethodsActivity(List<PaymentMethod> supportedPaymentMethods) {
+        new MercadoPagoComponents.Activities.ReviewPaymentMethodsActivityBuilder()
+                .setActivity(mActivity)
+                .setPublicKey(mPresenter.getPublicKey())
+                .setDecorationPreference(mDecorationPreference)
+                .setPaymentMethods(supportedPaymentMethods)
+                .startActivity();
     }
 
     @Override
