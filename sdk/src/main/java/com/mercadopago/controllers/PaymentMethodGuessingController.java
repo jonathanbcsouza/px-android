@@ -37,7 +37,9 @@ public class PaymentMethodGuessingController {
         List<PaymentMethod> supportedPaymentMethods = new ArrayList<>();
         for (PaymentMethod paymentMethod: mAllPaymentMethods) {
             if (isCardPaymentType(paymentMethod)) {
-                supportedPaymentMethods.add(paymentMethod);
+                if ((mPaymentTypeId == null) || (mPaymentTypeId.equals(paymentMethod.getPaymentTypeId()))) {
+                    supportedPaymentMethods.add(paymentMethod);
+                }
             }
         }
         return supportedPaymentMethods;
